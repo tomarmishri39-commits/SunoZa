@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SUNOZA — Listen • Discover • Enjoy ♡</title>
+  <meta name="description" content="SUNOZA is a modern multi-language and mood-based music discovery and streaming platform powered by legal preview playback." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Mobile Backdrop -->
+    <div id="sidebarBackdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar" aria-label="Primary Navigation">
+      <div class="sidebar-header">
+        <a href="#home" class="brand-link" data-nav="home" aria-label="SUNOZA Home">
+          <img src="assets/logo.svg" alt="SUNOZA Logo" class="brand-logo" />
+        </a>
+        <button id="closeSidebarBtn" class="icon-btn mobile-only" aria-label="Close navigation menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-view="home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5.5v-6h-5v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-item" data-view="explore">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/></svg>
+          <span>Explore Languages</span>
+        </button>
+        <button class="nav-item" data-view="mood">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          <span>Explore Mood</span>
+        </button>
+        <button class="nav-item" data-view="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          <span>Search</span>
+        </button>
+        <button class="nav-item" data-view="favourites">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span>Favourite Songs</span>
+          <span id="favCountBadge" class="badge-pill">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Languages</div>
+        <div class="sidebar-lang-list" id="sidebarLangList">
+          <button class="lang-chip active" data-lang="All">All</button>
+          <button class="lang-chip" data-lang="Hindi">Hindi</button>
+          <button class="lang-chip" data-lang="English">English</button>
+          <button class="lang-chip" data-lang="Punjabi">Punjabi</button>
+          <button class="lang-chip" data-lang="Bhojpuri">Bhojpuri</button>
+          <button class="lang-chip" data-lang="Haryanvi">Haryanvi</button>
+          <button class="lang-chip" data-lang="Maithili">Maithili</button>
+          <button class="lang-chip" data-lang="Magahi">Magahi</button>
+        </div>
+      </div>
+
+      <div class="sidebar-footer-card">
+        <div class="api-status-dot"></div>
+        <div>
+          <p class="api-status-title">iTunes Legal Preview API</p>
+          <p class="api-status-sub">30s legal audio previews &amp; live catalogue search</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <!-- Top Navbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="openSidebarBtn" class="icon-btn mobile-only" aria-label="Open navigation menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <a href="#home" class="topbar-mobile-brand mobile-only" data-nav="home">
+            <img src="assets/favicon.svg" alt="SUNOZA" width="32" height="32" />
+            <span>SUNOZA</span>
+          </a>
+          <form id="searchForm" class="search-box" role="search">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search songs, singers, albums, or languages (e.g. Arijit, Taylor Swift, Pawan Singh)..."
+              autocomplete="off"
+              aria-label="Search songs, singers, albums, or languages"
+            />
+            <button type="button" id="clearSearchBtn" class="clear-search-btn hidden" aria-label="Clear search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <button type="submit" class="search-submit-btn">Search</button>
+            <div id="searchHistoryDropdown" class="search-history-dropdown hidden">
+              <div class="history-header">
+                <span>Recent Searches</span>
+                <button type="button" id="clearHistoryBtn" class="text-btn">Clear</button>
+              </div>
+              <div id="searchHistoryList" class="history-list"></div>
+            </div>
+          </form>
+        </div>
+
+        <div class="topbar-right">
+          <button id="topbarFavBtn" class="pill-btn" data-view-jump="favourites" title="View Favourite Songs">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span>Favourites</span>
+          </button>
+          <button id="openQueueBtn" class="pill-btn pill-btn-accent" title="Open Play Queue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            <span>Queue (<span id="queueCountBadge">0</span>)</span>
+          </button>
+          <button id="openAuthBtn" class="btn-primary auth-trigger-btn">Sign In</button>
+          <div id="userProfileChip" class="user-profile-chip hidden">
+            <span id="userAvatarBadge" class="user-avatar-badge">U</span>
+            <span id="userNameLabel" class="user-name-label">User</span>
+            <button id="logoutBtn" class="text-btn logout-btn" title="Log out">Log out</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Scrollable Content -->
+      <main id="mainContent" class="main-content">
+        <!-- HOME VIEW -->
+        <section id="view-home" class="page-view active">
+          <div class="hero-banner">
+            <div class="hero-content">
+              <div class="hero-brand-row">
+                <img src="assets/favicon.svg" alt="SUNOZA Icon" class="hero-badge-icon" />
+                <span id="heroKicker" class="hero-kicker">LISTEN • DISCOVER • ENJOY ♡</span>
+              </div>
+              <h1 class="hero-title">Feel Every Beat with <span class="gradient-text">SUNOZA</span></h1>
+              <p class="hero-subtitle">Stream legal 30-second previews, explore songs by mood or language, discover Indian &amp; international artists, and save your favourites.</p>
+              <div class="hero-actions">
+                <button id="heroPlayTrendingBtn" class="btn-primary">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,4 20,12 6,20"/></svg>
+                  Play Trending Mix
+                </button>
+                <button id="heroExploreMoodBtn" class="btn-secondary">Explore Mood</button>
+                <button id="heroExploreBtn" class="btn-secondary">Explore Languages</button>
+              </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <div class="waveform-card">
+                <div class="eq-bars">
+                  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <p>Live Catalogue Discovery</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explore Mood Quick Section -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2>Explore by Mood</h2>
+              <button class="text-btn" data-jump-view="mood">Open Mood Hub</button>
+            </div>
+            <div id="homeMoodCards" class="mood-grid"></div>
+          </section>
+
+          <!-- Language Categories -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2>Language Categories</h2>
+              <span class="section-meta">Filter music by your preferred language</span>
+            </div>
+            <div id="homeLangCards" class="lang-grid"></div>
+          </section>
+
+          <!-- Recently Played -->
+          <section id="recentlyPlayedSection" class="content-section hidden">
+            <div class="section-header">
+              <h2>Recently Played</h2>
+              <button id="clearRecentBtn" class="text-btn">Clear History</button>
+            </div>
+            <div id="recentlyPlayedGrid" class="songs-grid"></div>
+          </section>
+
+          <!-- Trending Songs -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2>Trending Songs</h2>
+              <span class="section-meta" id="trendingStatusLabel">Loading live tracks...</span>
+            </div>
+            <div id="trendingGrid" class="songs-grid"></div>
+          </section>
+
+          <!-- Popular Artists -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2>Popular Artists</h2>
+              <span class="section-meta">Tap any artist to load their tracks</span>
+            </div>
+            <div id="popularArtistsGrid" class="artists-grid"></div>
+          </section>
+
+          <!-- Recommended For You -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2>Recommended For You</h2>
+              <button id="refreshRecommendedBtn" class="text-btn">Refresh Mix</button>
+            </div>
+            <div id="recommendedGrid" class="songs-grid"></div>
+          </section>
+
+          <!-- New Releases -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2>New Releases</h2>
+              <span class="section-meta">Fresh hits &amp; latest singles</span>
+            </div>
+            <div id="newReleasesGrid" class="songs-grid"></div>
+          </section>
+        </section>
+
+        <!-- EXPLORE LANGUAGES VIEW -->
+        <section id="view-explore" class="page-view">
+          <div class="view-header">
+            <div>
+              <h1>Explore Multi-Language Music</h1>
+              <p class="section-meta">Browse authentic catalogues across Hindi, English, Punjabi, Bhojpuri, Haryanvi, Maithili &amp; Magahi.</p>
+            </div>
+          </div>
+
+          <div id="exploreLangTabs" class="filter-pills"></div>
+          <div id="exploreStatusBar" class="status-banner hidden"></div>
+          <div id="exploreGrid" class="songs-grid"></div>
+        </section>
+
+        <!-- EXPLORE MOOD VIEW -->
+        <section id="view-mood" class="page-view">
+          <div class="view-header">
+            <div>
+              <h1>Explore Mood</h1>
+              <p class="section-meta">Pick a vibe to stream curated Happy, Sad, Excited, Motivational, and Devotional tracks.</p>
+            </div>
+          </div>
+
+          <div id="moodTabs" class="filter-pills"></div>
+          <div id="moodBanner" class="status-banner"></div>
+          <div id="moodGrid" class="songs-grid"></div>
+        </section>
+
+        <!-- SEARCH VIEW -->
+        <section id="view-search" class="page-view">
+          <div class="view-header">
+            <div>
+              <h1 id="searchResultsHeading">Search Music</h1>
+              <p id="searchResultsSub" class="section-meta">Search by partial song name, singer, album, or language.</p>
+            </div>
+          </div>
+
+          <div class="quick-tags-wrap">
+            <span class="quick-tags-label">Try searching:</span>
+            <div id="quickSearchTags" class="filter-pills"></div>
+          </div>
+
+          <div id="searchStateContainer"></div>
+          <div id="searchResultsGrid" class="songs-grid"></div>
+        </section>
+
+        <!-- FAVOURITES VIEW -->
+        <section id="view-favourites" class="page-view">
+          <div class="view-header favourites-header">
+            <div>
+              <h1>Favourite Songs ♡</h1>
+              <p id="favouritesSub" class="section-meta">Your liked songs are saved locally in your browser.</p>
+            </div>
+            <div class="favourites-actions">
+              <button id="playAllFavsBtn" class="btn-primary hidden">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="6,4 20,12 6,20"/></svg>
+                Play All
+              </button>
+            </div>
+          </div>
+          <div id="favouritesEmpty" class="empty-state hidden">
+            <div class="empty-icon">♡</div>
+            <h3>No Favourite Songs Yet</h3>
+            <p>Tap the heart icon on any song card or in the player to save it here.</p>
+            <button class="btn-primary" data-jump-view="home">Discover Music</button>
+          </div>
+          <div id="favouritesGrid" class="songs-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Play Queue Drawer -->
+    <aside id="queueDrawer" class="queue-drawer" aria-label="Play Queue" aria-hidden="true">
+      <div class="queue-header">
+        <h3>Play Queue</h3>
+        <div class="queue-header-actions">
+          <button id="clearQueueBtn" class="text-btn">Clear</button>
+          <button id="closeQueueBtn" class="icon-btn" aria-label="Close queue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="queueNowPlaying" class="queue-now-playing"></div>
+      <div class="queue-list-title">Up Next</div>
+      <div id="queueList" class="queue-list"></div>
+    </aside>
+
+    <!-- Bottom Music Player -->
+    <footer class="music-player" aria-label="Music Player">
+      <div class="player-track">
+        <img id="playerArt" src="assets/favicon.svg" alt="Album artwork" class="player-art" />
+        <div class="player-meta">
+          <div id="playerTitle" class="player-title">Select a song to play</div>
+          <div id="playerArtist" class="player-artist">SUNOZA • Listen • Discover • Enjoy</div>
+        </div>
+        <button id="playerLikeBtn" class="icon-btn heart-btn" aria-label="Like current song" title="Like song">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+
+      <div class="player-center">
+        <div class="player-controls">
+          <button id="shuffleBtn" class="icon-btn" aria-label="Toggle shuffle" title="Shuffle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+          </button>
+          <button id="prevBtn" class="icon-btn" aria-label="Previous song" title="Previous">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><rect x="5" y="4" width="2.5" height="16"/></svg>
+          </button>
+          <button id="playPauseBtn" class="play-pause-btn" aria-label="Play or pause">
+            <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            <svg id="pauseIcon" class="hidden" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <button id="nextBtn" class="icon-btn" aria-label="Next song" title="Next">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><rect x="16.5" y="4" width="2.5" height="16"/></svg>
+          </button>
+          <button id="repeatBtn" class="icon-btn" aria-label="Toggle repeat" title="Repeat: Off">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            <span id="repeatOneBadge" class="repeat-one-badge hidden">1</span>
+          </button>
+        </div>
+
+        <div class="progress-row">
+          <span id="currentTimeLabel" class="time-label">0:00</span>
+          <input id="progressSlider" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek progress" />
+          <span id="totalTimeLabel" class="time-label">0:00</span>
+        </div>
+      </div>
+
+      <div class="player-volume">
+        <button id="muteBtn" class="icon-btn" aria-label="Mute or unmute" title="Mute / Unmute">
+          <svg id="volHighIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg id="volMuteIcon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+        <input id="volumeSlider" type="range" min="0" max="1" step="0.02" value="0.8" aria-label="Volume" />
+        <button id="playerQueueToggleBtn" class="icon-btn mobile-only" aria-label="Toggle queue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Authentication Modal (Log In / Sign Up) -->
+  <div id="authModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <div class="auth-brand-head">
+          <img src="assets/favicon.svg" alt="SUNOZA" width="32" height="32" />
+          <h2 id="authModalTitle">Welcome to SUNOZA</h2>
+        </div>
+        <button id="closeAuthBtn" class="icon-btn" aria-label="Close authentication modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="authTabLogin" class="auth-tab active" type="button">Log In</button>
+        <button id="authTabSignup" class="auth-tab" type="button">Sign Up</button>
+      </div>
+
+      <form id="authForm" class="auth-form" novalidate>
+        <div id="authNameField" class="form-field hidden">
+          <label for="authNameInput">Full Name</label>
+          <input id="authNameInput" type="text" placeholder="Enter your name" autocomplete="name" />
+        </div>
+        <div class="form-field">
+          <label for="authEmailInput">Email Address</label>
+          <input id="authEmailInput" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <div class="form-field">
+          <label for="authPasswordInput">Password</label>
+          <div class="password-wrap">
+            <input id="authPasswordInput" type="password" placeholder="At least 6 characters" autocomplete="current-password" required />
+            <button type="button" id="togglePasswordBtn" class="text-btn">Show</button>
+          </div>
+        </div>
+        <p id="authErrorMsg" class="auth-error hidden"></p>
+        <button id="authSubmitBtn" type="submit" class="btn-primary auth-submit-btn">Log In</button>
+      </form>
+      <p class="auth-note">Accounts are stored locally in your browser's <code>localStorage</code> for demo &amp; personalization.</p>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Hidden HTML5 Audio Element -->
+  <audio id="audioPlayer" preload="metadata"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
